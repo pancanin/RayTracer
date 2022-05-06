@@ -63,6 +63,8 @@ Now we find the determinants of the 2D matrices.
 So the vector that is perpendicular to A and B is [-22, -26, -28]
 ```
 
+![cross product depiction](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/3d-matrix-cross-product.png?raw=true)
+
 ### Subtracting matrices (in calculating lower left point context)
 
 Subtraction of two matrices of equal dimensions is the subtraction of corresponding elements. The result is a matrix with 
@@ -72,6 +74,29 @@ It looks like subtracting two vectors gives a vector that is in the opposite or 
 
 The lower left point is used as a reference vector to which we add the vertical and horizontal vectors adjusted with offset u, v.
 
-// TODO: Add drawing
+![subtracting matrices](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/matrix-subtraction.png?raw=true)
 
-### Calculating ray direction based on current pixel
+![lower left point](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/calculate-lower-left.png?raw=true)
+
+### Ray-sphere intersection
+
+If we have a point (x, y, z), we can calculate whether the point is on, in, outside a sphere at origin (0, 0, 0) with radius R.
+
+```
+x^2 + y^2 + z^2 = R^2
+```
+If the sphere is not at origin, but at point (Cx, Cy, Cz) we have to adjust.
+```
+(x - Cx)^2 + (y - Cy)^2 + (z - Cz)^2 = R2
+```
+
+In vector form this equasion will be:
+
+```
+P - (x, y, z) vector representing a point.
+C - (x, y, z) vector, center of the circle.
+
+(P - C) . (P - C) = R^2
+```
+// TODO: Research and explain why the above is true.
+// Research about finding the distance between two points using dot product.
