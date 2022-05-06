@@ -98,5 +98,23 @@ C - (x, y, z) vector, center of the circle.
 
 (P - C) . (P - C) = R^2
 ```
-// TODO: Research and explain why the above is true.
-// Research about finding the distance between two points using dot product.
+
+It is easier to understand why the above is true if you do the calculations with 2D matrices.
+subtracting the components at once with a vector and then the dot product acts like the `^2`.
+
+When we launch our ray, the arrow tip of the ray might not have reached the sphere yet. The `t` - time moves the ray forward and eventually
+it may reach the sphere.
+
+So, P(t) = A + tb, where A is origin and b is direction.
+When we substitute in ray-sphere formula we get:
+
+```
+(A + tb - C) . (A + tb - C) = R^2
+```
+
+If we perform some reductions we get:
+```
+t^2b.b + 2tb . (A - C) + (A - C) . (A - C) - R^2 = 0
+```
+
+This is a quadratic equasion and we can get either 0, 1 or two solutions.

@@ -11,7 +11,21 @@ vec3 lerp(const vec3& start, const vec3& end, double t) {
     return (1.0 - t) * start + t * end;
 }
 
+// See explanation in readme, but I decided to use the non-vector way of doing this where it looks like a
+// "is the tip of the vector in the sphere.
+// I suppose for future applications that will not be sufficient, because we would like to know where exactly the ray intersected the 
+// sphere.
+bool hit_sphere(const point3& center, double radius, const ray& r) {
+    return (r.direction().x() - center.x()) * (r.direction().x() - center.x()) +
+        (r.direction().y() - center.y()) * (r.direction().y() - center.y()) +
+        (r.direction().z() - center.z()) * (r.direction().z() - center.z()) - radius * radius <= 0;
+}
+
 color ray_color(const ray& r) {
+    if (hit_sphere(point3(0, 0, -1), 0.5, r)) {
+        return color(1, 0, 0);
+    }
+
     // Get a normalized vector of the direction the ray is pointing to.
     vec3 unit_direction = unitVector(r.direction());
 
