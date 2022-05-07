@@ -117,4 +117,25 @@ If we perform some reductions we get:
 t^2b.b + 2tb . (A - C) + (A - C) . (A - C) - R^2 = 0
 ```
 
-This is a quadratic equasion and we can get either 0, 1 or two solutions.
+This is a quadratic equasion and we can get either 0, 1 or two solutions, meaning that the ray either:
+- Does not intersect the sphere - 0 roots
+- Intersects at 1 point (is a tangent) - 1 root
+- Intersects at 2 points - 2 roots
+
+### Simpler ray-sphere intersection
+I am doing the research for Circles that easily translates to 3D.
+The above model is handy for getting the number of intersecting points and sounds smart, but I do not get it fully.
+I mean, how does the equasion for a sphere relates to a quadratic equasion - a bell-curve that intersects x. I can see it, but not
+sure how we got the formulas. It seems that if you could convert one equasion to a quadratic one, then it makes sense to use it and
+the results in the original equasion could be 0, 1 or 2 :thinking: :magic_wand: That's still magic to me.
+
+For the sake of science lets see the other approach, which is more geometric IMO.
+
+// TODO: Add picture of ray-circle intersection
+
+
+One thing that is not clear to me is how to find t and point P. I followed this video guide https://www.youtube.com/watch?v=HFPlKQGChpE and
+guy says that finding t = dot(S - R0, Rd), but that does not make sense when I do the calculations R0 + Rd*t. Maybe some magic is done to
+the Rd so that it is normalised in such a way that the scaling by t works.
+Ultimately, this point P should be the projection of S - R0 on the ray.
+TODO: Research projections.
