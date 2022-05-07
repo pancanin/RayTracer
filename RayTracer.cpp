@@ -11,19 +11,34 @@ vec3 lerp(const vec3& start, const vec3& end, double t) {
     return (1.0 - t) * start + t * end;
 }
 
-// See explanation in readme, but I decided to use the non-vector way of doing this where it looks like a
-// "is the tip of the vector in the sphere.
-// I suppose for future applications that will not be sufficient, because we would like to know where exactly the ray intersected the 
-// sphere.
-bool hit_sphere(const point3& center, double radius, const ray& r) {
-    return (r.direction().x() - center.x()) * (r.direction().x() - center.x()) +
-        (r.direction().y() - center.y()) * (r.direction().y() - center.y()) +
-        (r.direction().z() - center.z()) * (r.direction().z() - center.z()) - radius * radius <= 0;
+// We reduced the equasion of a sphere to a quadratic equasion.
+double hit_sphere(const point3& center, double radius, const ray& r) {
+    vec3 oc = r.origin() - center;
+    auto a = r.direction().lengthSquared();
+    auto b = 2.0 * dot(oc, r.direction());
+    auto c = dot(oc, oc) - radius * radius;
+    auto discriminant = b * b - 4 * a * c;
+    if (discriminant < 0) {
+        return -1.0;
+    }
+    else {
+        // Return just the negative solution, which will be facing the camera.
+        // If the ray intersects at two points, one of them will not be seen - it will be on the back side of the sphere.
+        // This is why here we return just the 'negative' solution, meaning the one closer to the camera.
+        return (-b - sqrt(discriminant)) / (2.0 * a);
+    }
 }
 
 color ray_color(const ray& r) {
-    if (hit_sphere(point3(0, 0, -1), 0.5, r)) {
-        return color(1, 0, 0);
+    auto sphere_center = point3(0, 0, -1);
+    auto sphere_radius = 0.5;
+    auto closest_point_of_intersection = hit_sphere(sphere_center, sphere_radius, r);
+    
+    if (closest_point_of_intersection > 0.0) {
+        // We will shade using the normal of the sphere at point of intersection. The normal will be of unit vector length.
+        // We get the normal vector by subtracting the point of intersection
+        vec3 normal = unitVector(r.at(closest_point_of_intersection) - sphere_center);
+        return 0.5 * color(normal.x() + 1, normal.y() + 1, normal.z() + 1);
     }
 
     // Get a normalized vector of the direction the ray is pointing to.
