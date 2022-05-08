@@ -3,42 +3,25 @@
 
 #include <iostream>
 
-#include "vec3.h"
-#include "ray.h"
+#include "utils.h"
+
+#include "hittable_list.h"
+#include "sphere.h"
+#include "camera.h"
 
 // Linear interpolation
 vec3 lerp(const vec3& start, const vec3& end, double t) {
     return (1.0 - t) * start + t * end;
 }
 
-// We reduced the equasion of a sphere to a quadratic equasion.
-double hit_sphere(const point3& center, double radius, const ray& r) {
-    vec3 oc = r.origin() - center;
-    auto a = r.direction().lengthSquared();
-    auto b = 2.0 * dot(oc, r.direction());
-    auto c = dot(oc, oc) - radius * radius;
-    auto discriminant = b * b - 4 * a * c;
-    if (discriminant < 0) {
-        return -1.0;
-    }
-    else {
-        // Return just the negative solution, which will be facing the camera.
-        // If the ray intersects at two points, one of them will not be seen - it will be on the back side of the sphere.
-        // This is why here we return just the 'negative' solution, meaning the one closer to the camera.
-        return (-b - sqrt(discriminant)) / (2.0 * a);
-    }
-}
-
-color ray_color(const ray& r) {
-    auto sphere_center = point3(0, 0, -1);
-    auto sphere_radius = 0.5;
-    auto closest_point_of_intersection = hit_sphere(sphere_center, sphere_radius, r);
+color ray_color(const ray& r, const hittable& world) {
+    hit_record hit_data;
+    bool isHit = world.hit(r, 0, infinity, hit_data);
     
-    if (closest_point_of_intersection > 0.0) {
+    if (isHit) {
         // We will shade using the normal of the sphere at point of intersection. The normal will be of unit vector length.
         // We get the normal vector by subtracting the point of intersection
-        vec3 normal = unitVector(r.at(closest_point_of_intersection) - sphere_center);
-        return 0.5 * color(normal.x() + 1, normal.y() + 1, normal.z() + 1);
+        return 0.5 * (hit_data.normal + color(1, 1, 1));
     }
 
     // Get a normalized vector of the direction the ray is pointing to.
@@ -57,77 +40,58 @@ int main()
     const double aspectRatio = 16.0 / 9.0;
     const int imageWidth = 400;
     const int imageHeight = static_cast<int>(imageWidth / aspectRatio);
+    const int numberOfSamples = 100;
 
-    // Camera
-    double viewportHeight = 2.0;
-    double viewportWidth = viewportHeight * aspectRatio;
-    double focalLenght = 1.0;
+    camera cam;
 
-    auto origin = point3(0, 0, 0);
-    auto horizontal = vec3(viewportWidth, 0, 0);
-    auto vertical = vec3(0, viewportHeight, 0);
+    // World
+    hittable_list world;
+    world.add(make_shared<sphere>(point3(0, -100.5, -1), 100));
+    world.add(make_shared<sphere>(point3(0, 0, -1), 0.5));
+   
 
-    // see image in readme about calculating lower left point.
-    auto lowerLeftCorner = origin / 2 - horizontal / 2 - vertical / 2 - vec3(0, 0, focalLenght);
 
-    std::cerr << "Lower left corner calculation: \n" <<
-        "- origin is: " << origin << '\n' <<
-        "- horizontal is: " << (horizontal / 2) << '\n' <<
-        "- vertical is: " << (vertical / 2) << '\n' <<
-        "- focal length vec is: " << vec3(0, 0, focalLenght) << '\n' <<
-        "Lower left corner is " << lowerLeftCorner << '\n' << std::flush;
-
-    std::cerr << lowerLeftCorner << '\n' << std::flush;
     // Render
     std::cout << "P3" << std::endl << imageWidth << " " << imageHeight << std::endl << "255" << std::endl;
 
     for (int j = imageHeight - 1; j >= 0; --j) {
         //std::cerr << "Scanlines remaining: " << j << ' \n' << std::flush;
         for (int i = 0; i < imageWidth; ++i) {
+            color pixelColor(0, 0, 0);
+            for (int sample = 0; sample < numberOfSamples; sample++) {
 
-            // Normalise values of u and v.
-            double u = double(i) / (imageWidth - 1);
-            double v = double(j) / (imageHeight - 1);
-            
-            // Calculate a direction vector for the ray.
-            // By multiplying the horizontal and vertical vectors with the normalized u, v values
-            // we find the value of the current component (x, y).
-            // For example: in start of the loop we got:
-            // j = 254, i = 0, imageHeight = 255, imageWidth = 400
-            // v = j / (imageHeight - 1), v = 254 / (255 - 1), v = 1
-            // u = i / (imageWidth - 1), u = 0
+                // Normalise values of u and v.
+                double u = (double(i) + random_double()) / (imageWidth - 1);
+                double v = (double(j) + random_double()) / (imageHeight - 1);
 
-            // v = 1, u = 0
-            // horizontal = (4, 0, 0), vertical = (0, 2, 0)
-            // horizontal * u = (4, 0, 0) * 0 = (0, 0, 0)
-            // vertical * v = (0, 2, 0) * 1 = (0, 2, 0)
+                // Calculate a direction vector for the ray.
+                // By multiplying the horizontal and vertical vectors with the normalized u, v values
+                // we find the value of the current component (x, y).
+                // For example: in start of the loop we got:
+                // j = 254, i = 0, imageHeight = 255, imageWidth = 400
+                // v = j / (imageHeight - 1), v = 254 / (255 - 1), v = 1
+                // u = i / (imageWidth - 1), u = 0
 
-            // For our viewport sizes, we calculated that the lower left corner is pointed by a vector
-            // from origin to (-1.77, -1, -1).
-            // So the direction of the first ray that we will cast will be:
-            // dir = (-1.77, -1, -1) + (0, 0, 0) + (0, 2, 0) - (0, 0, 0)
-            // dir = (-1.77, 1, -1)
+                // v = 1, u = 0
+                // horizontal = (4, 0, 0), vertical = (0, 2, 0)
+                // horizontal * u = (4, 0, 0) * 0 = (0, 0, 0)
+                // vertical * v = (0, 2, 0) * 1 = (0, 2, 0)
 
-            // On the second iteration i = 1, 'u' will become > 0 and we will get a direction slightly to the right.
-            vec3 direction(lowerLeftCorner + u * horizontal + v * vertical - origin);
-            //std::cerr << direct << std::endl;
-            ray r(origin, direction);
-            color pixelColor = ray_color(r);
+                // For our viewport sizes, we calculated that the lower left corner is pointed by a vector
+                // from origin to (-1.77, -1, -1).
+                // So the direction of the first ray that we will cast will be:
+                // dir = (-1.77, -1, -1) + (0, 0, 0) + (0, 2, 0) - (0, 0, 0)
+                // dir = (-1.77, 1, -1)
 
-            write_color(std::cout, pixelColor);
+                // On the second iteration i = 1, 'u' will become > 0 and we will get a direction slightly to the right.
+
+                ray r = cam.get_ray(u, v);
+                pixelColor += ray_color(r, world);
+            }
+
+            write_color(std::cout, pixelColor, numberOfSamples);
         }
     }
 
     std::cerr << "Done!" << std::flush;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

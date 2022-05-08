@@ -123,4 +123,11 @@ This is a quadratic equasion and we can get either 0, 1 or two solutions, meanin
 - Intersects at 2 points - 2 roots
 
 
-### Finding the normal at intersection point.
+### Finding the normal at intersection point of a circle/sphere.
+If we subtract the intersection vector with the vector from origin to the center of the circle we will get the normal.
+
+### Antialiasing with pixel samples
+
+So far, we have been 'hitting' each pixel with one ray and we calculated the color of the pixel only using that ray. That is one sample.
+We can add a bit of randomness to the u, v of the ray, so that we get data from neighbouring pixels, repeat that several times and then get the average color.
+As a result we get a nice blur around the edges. It's simple blending :)
