@@ -14,14 +14,20 @@ vec3 lerp(const vec3& start, const vec3& end, double t) {
     return (1.0 - t) * start + t * end;
 }
 
-color ray_color(const ray& r, const hittable& world) {
+color ray_color(const ray& r, const hittable& world, int depth) {
+    if (depth <= 0) {
+        return color(0, 0, 0);
+    }
     hit_record hit_data;
     bool isHit = world.hit(r, 0, infinity, hit_data);
     
     if (isHit) {
-        // We will shade using the normal of the sphere at point of intersection. The normal will be of unit vector length.
-        // We get the normal vector by subtracting the point of intersection
-        return 0.5 * (hit_data.normal + color(1, 1, 1));
+        // Diffuse material.
+        // Here we find a unit circle in the circle normal of the intersection point.
+        point3 target = hit_data.p + hit_data.normal + vec3::random_in_unit_sphere();
+
+        // We calculate ray color and recursively cast a new ray towards the sphere.
+        return 0.5 * ray_color(ray(hit_data.p, target - hit_data.p), world, depth - 1);
     }
 
     // Get a normalized vector of the direction the ray is pointing to.
@@ -86,7 +92,7 @@ int main()
                 // On the second iteration i = 1, 'u' will become > 0 and we will get a direction slightly to the right.
 
                 ray r = cam.get_ray(u, v);
-                pixelColor += ray_color(r, world);
+                pixelColor += ray_color(r, world, 10);
             }
 
             write_color(std::cout, pixelColor, numberOfSamples);

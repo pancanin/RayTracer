@@ -131,3 +131,11 @@ If we subtract the intersection vector with the vector from origin to the center
 So far, we have been 'hitting' each pixel with one ray and we calculated the color of the pixel only using that ray. That is one sample.
 We can add a bit of randomness to the u, v of the ray, so that we get data from neighbouring pixels, repeat that several times and then get the average color.
 As a result we get a nice blur around the edges. It's simple blending :)
+
+### Diffuse materials
+
+Diffuse materials take the color of their surroundings. To let the objects mix their colors we can implement random light ray bounces.
+
+1. define a unit sphere on the normal at the point of intersection.
+2. Choose a random point in that sphere.
+3. Cast a ray from the random point at a random direction.
