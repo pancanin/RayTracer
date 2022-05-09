@@ -42,20 +42,10 @@ public:
 		return e[0] * e[0] + e[1] * e[1] + e[2] * e[2];
 	}
 
-	inline static vec3 random() {
-		return vec3(random_double(), random_double(), random_double());
-	}
-
-	inline static vec3 random(double min, double max) {
-		return vec3(random_double(min, max), random_double(min, max), random_double(min, max));
-	}
-
-	inline static vec3 random_in_unit_sphere() {
-		while (true) {
-			auto p = random(-1, 1);
-			if (p.length_squared() > 1) continue;
-			return p;
-		}
+	bool near_zero() const {
+		// Return true if the vector is close to zero in all dimensions.
+		const auto s = 1e-8;
+		return (fabs(e[0]) < s) && (fabs(e[1]) < s) && (fabs(e[2]) < s);
 	}
 
 	double e[3];
@@ -70,10 +60,6 @@ inline std::ostream& operator<<(std::ostream& out, const vec3& v) {
 
 inline vec3 operator+(const vec3& u, const vec3& v) {
 	return vec3(u.e[0] + v.e[0], u.e[1] + v.e[1], u.e[2] + v.e[2]);
-}
-
-inline vec3 operator-(const vec3& u, const vec3& v) {
-	return vec3(u.e[0] - v.e[0], u.e[1] - v.e[1], u.e[2] - v.e[2]);
 }
 
 inline vec3 operator*(const vec3& u, const vec3& v) {
@@ -92,6 +78,14 @@ inline vec3 operator/(vec3 v, double t) {
 	return (1 / t) * v;
 }
 
+inline vec3 unitVector(const vec3& u) {
+	return u / u.length();
+}
+
+inline vec3 operator-(const vec3& u, const vec3& v) {
+	return vec3(u.e[0] - v.e[0], u.e[1] - v.e[1], u.e[2] - v.e[2]);
+}
+
 inline double dot(const vec3& u, const vec3& v) {
 	return u[0] * v[0] +
 		u[1] * v[1] +
@@ -106,8 +100,28 @@ inline vec3 cross(const vec3& u, const vec3& v) {
 	);
 }
 
-inline vec3 unitVector(const vec3& u) {
-	return u / u.length();
+inline static vec3 reflect(const vec3& v, const vec3& n) {
+	return v - -(dot(v, n) * n);
+}
+
+inline vec3 random() {
+	return vec3(random_double(), random_double(), random_double());
+}
+
+inline vec3 random(double min, double max) {
+	return vec3(random_double(min, max), random_double(min, max), random_double(min, max));
+}
+
+inline vec3 random_in_unit_sphere() {
+	while (true) {
+		auto p = random(-1, 1);
+		if (p.length_squared() > 1) continue;
+		return p;
+	}
+}
+
+inline vec3 random_unit_vector() {
+	return unitVector(random_in_unit_sphere());
 }
 
 void write_color(std::ostream& out, color pixel_color, int samples_per_pixel) {

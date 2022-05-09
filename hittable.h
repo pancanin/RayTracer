@@ -1,12 +1,13 @@
 #pragma once
 
-#include "ray.h"
+#include "utils.h"
 
 struct hit_record {
 	point3 p;
 	vec3 normal;
 	double t;
 	bool front_face;
+	shared_ptr<material> mat_ptr;
 
 	// Based on the ray and the normal pointing away from the center of the object we can calculate 
 	// if it should be a front facing normal or back facing.

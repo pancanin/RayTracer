@@ -44,3 +44,7 @@ inline double clamp(double x, double min, double max) {
 
 #include "ray.h"
 #include "vec3.h"
+#include "material.h"
+#include "hittable.h"
+#include "lambertian.h"
+#include "metal.h"

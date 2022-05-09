@@ -19,15 +19,17 @@ color ray_color(const ray& r, const hittable& world, int depth) {
         return color(0, 0, 0);
     }
     hit_record hit_data;
-    bool isHit = world.hit(r, 0, infinity, hit_data);
+    // For min t we are setting a value a bit bigger than 0 to avoid Shadow Acne.
+    bool isHit = world.hit(r, 0.001, infinity, hit_data);
     
     if (isHit) {
         // Diffuse material.
         // Here we find a unit circle in the circle normal of the intersection point.
-        point3 target = hit_data.p + hit_data.normal + vec3::random_in_unit_sphere();
-
-        // We calculate ray color and recursively cast a new ray towards the sphere.
-        return 0.5 * ray_color(ray(hit_data.p, target - hit_data.p), world, depth - 1);
+        ray scattered;
+        color attenuation;
+        if (hit_data.mat_ptr->scatter(r, hit_data, attenuation, scattered))
+            return attenuation * ray_color(scattered, world, depth - 1);
+        return color(0, 0, 0);
     }
 
     // Get a normalized vector of the direction the ray is pointing to.
@@ -52,8 +54,15 @@ int main()
 
     // World
     hittable_list world;
-    world.add(make_shared<sphere>(point3(0, -100.5, -1), 100));
-    world.add(make_shared<sphere>(point3(0, 0, -1), 0.5));
+    auto material_ground = make_shared<lambertian>(color(0.8, 0.8, 0.0));
+    auto material_center = make_shared<lambertian>(color(0.7, 0.3, 0.3));
+    auto material_left = make_shared<metal>(color(0.8, 0.8, 0.8));
+    auto material_right = make_shared<metal>(color(0.8, 0.6, 0.2));
+
+    world.add(make_shared<sphere>(point3(0.0, -100.5, -1.0), 100.0, material_ground));
+    world.add(make_shared<sphere>(point3(0.0, 0.0, -1.0), 0.5, material_center));
+    world.add(make_shared<sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_left));
+    world.add(make_shared<sphere>(point3(1.0, 0.0, -1.0), 0.5, material_right));
    
 
 
