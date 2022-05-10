@@ -23,10 +23,13 @@ color ray_color(const ray& r, const hittable& world, int depth) {
     bool isHit = world.hit(r, 0.001, infinity, hit_data);
     
     if (isHit) {
-        // Diffuse material.
-        // Here we find a unit circle in the circle normal of the intersection point.
         ray scattered;
         color attenuation;
+
+        // If we have hit something then we cast another ray in a direction:
+        // For diffuse materials the direction is random.
+        // For metal materials the reflection is a mirrored one.
+        // `attenuation` is a color which decreases the light from each ray, because as the distance increases light in real world get scattered and becomes less focused.
         if (hit_data.mat_ptr->scatter(r, hit_data, attenuation, scattered))
             return attenuation * ray_color(scattered, world, depth - 1);
         return color(0, 0, 0);
@@ -50,18 +53,19 @@ int main()
     const int imageHeight = static_cast<int>(imageWidth / aspectRatio);
     const int numberOfSamples = 100;
 
-    camera cam;
+    camera cam(90.0, aspectRatio);
 
     // World
     hittable_list world;
     auto material_ground = make_shared<lambertian>(color(0.8, 0.8, 0.0));
-    auto material_center = make_shared<lambertian>(color(0.7, 0.3, 0.3));
-    auto material_left = make_shared<metal>(color(0.8, 0.8, 0.8));
+    auto material_center = make_shared<lambertian>(color(0.1, 0.2, 0.5));
+    auto material_left = make_shared<dielectric>(1.5);
     auto material_right = make_shared<metal>(color(0.8, 0.6, 0.2));
 
     world.add(make_shared<sphere>(point3(0.0, -100.5, -1.0), 100.0, material_ground));
     world.add(make_shared<sphere>(point3(0.0, 0.0, -1.0), 0.5, material_center));
     world.add(make_shared<sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_left));
+    world.add(make_shared<sphere>(point3(-1.0, 0.0, -1.0), -0.4, material_left));
     world.add(make_shared<sphere>(point3(1.0, 0.0, -1.0), 0.5, material_right));
    
 

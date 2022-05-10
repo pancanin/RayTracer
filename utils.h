@@ -48,3 +48,4 @@ inline double clamp(double x, double min, double max) {
 #include "hittable.h"
 #include "lambertian.h"
 #include "metal.h"
+#include "dielectric.h"
