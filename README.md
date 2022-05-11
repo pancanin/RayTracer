@@ -139,3 +139,63 @@ Diffuse materials take the color of their surroundings. To let the objects mix t
 1. define a unit sphere on the normal at the point of intersection.
 2. Choose a random point in that sphere.
 3. Cast a ray from the random point at a random direction.
+
+### Projection
+
+![right-triangle](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/right-triangle.png?raw=true)
+
+Start with the cosine equasion:
+
+```
+cos(0) = adjacent/hypotenuse = a/c
+```
+
+In terms of vectors that would be:
+
+```
+cos([u, w]) = ||u|| / ||w||
+Which for ||w||
+||w|| = ||u|| * cos([u, w])
+
+If v is a unit vector then:
+
+w = ||w|| * v
+
+If it is not then we can convert it to unit vector.
+
+w = ||w|| * v / ||v||
+
+When we substitute for ||w|| then we get:
+
+w = (||u|| * cos([u, w]) * v) / ||v||
+
+We will perform one magic trick to express this equasion in terms of dot product.
+Let`s multiply both numerator and denominator with ||v||
+
+w = (||v|| * ||u|| * cos([u, w]) * v) \ ||v||^2
+
+Inside the brackets we can see the definition of a dot product - u . w = ||u|| * ||v|| * cos([u,w])
+So we can substitute with the dot product
+w = (v . u * v) / ||v||^2
+
+And if v is a unit vector then the denominator becomes 1:
+
+w = v . u * v, if ||v|| = 1
+```
+
+![projection](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/projection.png?raw=true)
+
+
+### Ray Reflection.
+
+![reflection](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/reflection.png?raw=true)
+
+We have the ray coming from our camera that hits the plane and a normal vector at intersection point.
+
+1. Move the ray, so that it`s start point is at the intersection point (this is the blue vector below the intersection point on the picture)
+2. Next, we project i onto the normal vector using the projection formula for projection from above. This gives use the cyan vector.
+3. The projected vector is negated and added to i.
+4. To reach the reflected vector we add the projected vector once more.
+5. The reflected vector r is the vector from intersection point to the point of the reflected vector from above.
+
+On the picture, the rays that are added together to reach the reflection point are shown in orange.
