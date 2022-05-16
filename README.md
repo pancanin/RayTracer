@@ -70,7 +70,7 @@ So the vector that is perpendicular to A and B is [-22, -26, -28]
 Subtraction of two matrices of equal dimensions is the subtraction of corresponding elements. The result is a matrix with 
 same dimensions as the terms.
 
-It looks like subtracting two vectors gives a vector that is in the opposite or perpendicular direction of their addition vector.
+It looks like subtracting two vectors gives a vector that is with the length of the distance between the endpoints of the vectors.1
 
 The lower left point is used as a reference vector to which we add the vertical and horizontal vectors adjusted with offset u, v.
 

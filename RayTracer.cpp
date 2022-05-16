@@ -9,11 +9,6 @@
 #include "sphere.h"
 #include "camera.h"
 
-// Linear interpolation
-vec3 lerp(const vec3& start, const vec3& end, double t) {
-    return (1.0 - t) * start + t * end;
-}
-
 color ray_color(const ray& r, const hittable& world, int depth) {
     if (depth <= 0) {
         return color(0, 0, 0);
@@ -36,7 +31,7 @@ color ray_color(const ray& r, const hittable& world, int depth) {
     }
 
     // Get a normalized vector of the direction the ray is pointing to.
-    vec3 unit_direction = unitVector(r.direction());
+    vec3 unit_direction = unit_vector(r.direction());
 
     // Calculate a step for the linear interpolation based on y.
     // The constants around y just make sure the step is finer for a softer gradient.
@@ -48,24 +43,55 @@ color ray_color(const ray& r, const hittable& world, int depth) {
 
 int main()
 {
-    const double aspectRatio = 16.0 / 9.0;
+    const double aspect_ratio = 16.0 / 9.0;
     const int imageWidth = 400;
-    const int imageHeight = static_cast<int>(imageWidth / aspectRatio);
-    const int numberOfSamples = 100;
-
-    camera cam(45.0, aspectRatio);
+    const int imageHeight = static_cast<int>(imageWidth / aspect_ratio);
+    const int numberOfSamples = 10;
 
     // World
+
     hittable_list world;
-    auto R = cos(pi / 4);
 
-    auto material_left = make_shared<lambertian>(color(0, 0, 1));
-    auto material_right = make_shared<lambertian>(color(1, 0, 0));
+    for (int x = -5; x < 5; x++) {
+        for (int z = -5; z < 5; z++) {
+            double material = random_double();
 
-    world.add(make_shared<sphere>(point3(-R, 0, -1), R, material_left));
-    world.add(make_shared<sphere>(point3(R, 0, -1), R, material_right));
-   
+            if (material <= 0.33) {
+                auto lambertian_material = make_shared<lambertian>(color(random_double(), random_double(), random_double()));
 
+                world.add(make_shared<sphere>(point3(x, 0.0, z), random_double(), lambertian_material));
+            }
+            else if (material <= 0.66) {
+                auto dielectric_material = make_shared<dielectric>(random_double());
+
+                world.add(make_shared<sphere>(point3(x, 0.0, z), random_double(), dielectric_material));
+            }
+            else {
+                auto metal_material = make_shared<metal>(color(random_double(), random_double(), random_double()));
+
+                world.add(make_shared<sphere>(point3(x, 0.0, z), random_double(), metal_material));
+            }
+        }
+    }
+
+    /*auto material_ground = make_shared<lambertian>(color(0.2, 0.8, 0));
+    auto material_center = make_shared<lambertian>(color(0.1, 0.2, 0.5));
+    auto material_left = make_shared<dielectric>(1.5);
+    auto material_right = make_shared<metal>(color(0.8, 0.6, 0.2));
+
+    world.add(make_shared<sphere>(point3(0.0, 100.5, -1.0), 100.0, material_ground));
+    world.add(make_shared<sphere>(point3(0.0, 0.0, -1.0), 0.5, material_center));
+    world.add(make_shared<sphere>(point3(-1.0, 0.0, -2.0), 0.5, material_left));
+    world.add(make_shared<sphere>(point3(-1.0, 0.0, -3.0), -0.45, material_left));
+    world.add(make_shared<sphere>(point3(1.0, 0.0, -1.0), 0.5, material_right));*/
+
+    point3 lookfrom(0, 0, -2);
+    point3 lookat(0, 0, 0);
+    vec3 vup(0, 1, 0);
+    auto dist_to_focus = (lookfrom - lookat).length();
+    auto aperture = 1.0;
+
+    camera cam(lookfrom, lookat, vup, 90, aspect_ratio, aperture, dist_to_focus);
 
     // Render
     std::cout << "P3" << std::endl << imageWidth << " " << imageHeight << std::endl << "255" << std::endl;

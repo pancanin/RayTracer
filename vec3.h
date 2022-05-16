@@ -83,7 +83,7 @@ inline vec3 operator/(vec3 v, double t) {
 	return (1 / t) * v;
 }
 
-inline vec3 unitVector(const vec3& u) {
+inline vec3 unit_vector(const vec3& u) {
 	return u / u.length();
 }
 
@@ -118,7 +118,7 @@ inline vec3 random(double min, double max) {
 	return vec3(random_double(min, max), random_double(min, max), random_double(min, max));
 }
 
-inline vec3 random_in_unit_sphere() {
+inline vec3 random_vector() {
 	while (true) {
 		auto p = random(-1, 1);
 		if (p.components_squared() > 1) continue;
@@ -127,7 +127,19 @@ inline vec3 random_in_unit_sphere() {
 }
 
 inline vec3 random_unit_vector() {
-	return unitVector(random_in_unit_sphere());
+	return unit_vector(random_vector());
+}
+
+inline vec3 random_in_unit_disk() {
+	while (true) {
+		auto p = vec3(random_double(-1, 1), random_double(-1, 1), 0);
+		if (p.components_squared() >= 1) continue;
+		return p;
+	}
+}
+
+vec3 lerp(const vec3& start, const vec3& end, double t) {
+	return (1.0 - t) * start + t * end;
 }
 
 vec3 refract(const vec3& uv, const vec3& n, double etai_over_etat) {
