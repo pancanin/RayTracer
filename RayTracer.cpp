@@ -46,44 +46,21 @@ int main()
     const double aspect_ratio = 16.0 / 9.0;
     const int imageWidth = 400;
     const int imageHeight = static_cast<int>(imageWidth / aspect_ratio);
-    const int numberOfSamples = 10;
+    const int numberOfSamples = 100;
 
     // World
 
     hittable_list world;
 
-    for (int x = -5; x < 5; x++) {
-        for (int z = -5; z < 5; z++) {
-            double material = random_double();
-
-            if (material <= 0.33) {
-                auto lambertian_material = make_shared<lambertian>(color(random_double(), random_double(), random_double()));
-
-                world.add(make_shared<sphere>(point3(x, 0.0, z), random_double(), lambertian_material));
-            }
-            else if (material <= 0.66) {
-                auto dielectric_material = make_shared<dielectric>(random_double());
-
-                world.add(make_shared<sphere>(point3(x, 0.0, z), random_double(), dielectric_material));
-            }
-            else {
-                auto metal_material = make_shared<metal>(color(random_double(), random_double(), random_double()));
-
-                world.add(make_shared<sphere>(point3(x, 0.0, z), random_double(), metal_material));
-            }
-        }
-    }
-
-    /*auto material_ground = make_shared<lambertian>(color(0.2, 0.8, 0));
-    auto material_center = make_shared<lambertian>(color(0.1, 0.2, 0.5));
-    auto material_left = make_shared<dielectric>(1.5);
+    auto material_ground = make_shared<lambertian>(color(0.8, 0.8, 0.0));
+    auto material_center = make_shared<lambertian>(color(0.7, 0.3, 0.3));
+    auto material_left = make_shared<metal>(color(0.8, 0.8, 0.8));
     auto material_right = make_shared<metal>(color(0.8, 0.6, 0.2));
 
-    world.add(make_shared<sphere>(point3(0.0, 100.5, -1.0), 100.0, material_ground));
+    world.add(make_shared<sphere>(point3(0.0, -100.5, -1.0), 100.0, material_ground));
     world.add(make_shared<sphere>(point3(0.0, 0.0, -1.0), 0.5, material_center));
-    world.add(make_shared<sphere>(point3(-1.0, 0.0, -2.0), 0.5, material_left));
-    world.add(make_shared<sphere>(point3(-1.0, 0.0, -3.0), -0.45, material_left));
-    world.add(make_shared<sphere>(point3(1.0, 0.0, -1.0), 0.5, material_right));*/
+    world.add(make_shared<sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_left));
+    world.add(make_shared<sphere>(point3(1.0, 0.0, -1.0), 0.5, material_right));
 
     point3 lookfrom(0, 0, -2);
     point3 lookat(0, 0, 0);
@@ -128,7 +105,7 @@ int main()
                 // On the second iteration i = 1, 'u' will become > 0 and we will get a direction slightly to the right.
 
                 ray r = cam.get_ray(u, v);
-                pixelColor += ray_color(r, world, 10);
+                pixelColor += ray_color(r, world, 50);
             }
 
             write_color(std::cout, pixelColor, numberOfSamples);

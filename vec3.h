@@ -5,8 +5,8 @@
 
 class vec3 {
 public:
-	vec3() : e{ 0, 0, 0 } {}
 	vec3(double e0, double e1, double e2) : e{ e0, e1, e2 } {}
+	vec3() : vec3(0, 0, 0) {}
 
 	double x() const { return e[0]; }
 	double y() const { return e[1]; }
@@ -91,12 +91,23 @@ inline vec3 operator-(const vec3& u, const vec3& v) {
 	return vec3(u.x() - v.x(), u.y() - v.y(), u.z() - v.z());
 }
 
+/**
+* Dot product is a measure of the relative position of two vectors.
+* V . U > 0 => same dir
+* V . U == 0 => parallel
+* V . U < 0 => not same dir.
+*/
 inline double dot(const vec3& u, const vec3& v) {
 	return u[0] * v[0] +
 		u[1] * v[1] +
 		u[2] * v[2];
 }
 
+/**
+* Cross product of two vec returns a vec that is orthogonal to them.
+* The length of the cross product vector is equal to the determinant of V and U.
+* TODO: Add meaning of cross product in terms of the area, volume of the parallelogram, parallelepiped.
+*/
 inline vec3 cross(const vec3& u, const vec3& v) {
 	return vec3(
 		u[1] * v[2] - v[1] * u[2],
