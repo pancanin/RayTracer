@@ -4,7 +4,7 @@
 
 class sphere : public hittable {
 public:
-	sphere() {}
+    sphere() : center(point3{ 0, 0, 0 }), radius(0.0), mat(nullptr) {}
 	sphere(point3 cen, double r, shared_ptr<material> m) : center(cen), radius(r), mat(m) {}
 
 	virtual bool hit(const ray& r, double t_min, double t_max, hit_record& rec) const override;
@@ -49,10 +49,18 @@ public:
 * 
 * Which after rearranging is:
 * 
+* (O + tD - C)^2 - R^2 = 0
+* 
+* a = D^2(direction vector normalised) = 1
+* b = 2*D*(O - C)
+* c = |0 - C|^2 - R^2
+* 
 */
-bool sphere::hit(const ray& r, double t_min, double t_max, hit_record& rec) const {
+bool sphere::hit(const ray& r, double t_min, double t_max, hit_record& out_rec) const {
+    // That's |O - C| from above formula.
     vec3 oc = r.origin() - center;
     auto a = r.direction().components_squared();
+    // For b, an optimisation is made.
     auto half_b = dot(oc, r.direction());
     auto c = oc.components_squared() - radius * radius;
 
@@ -68,11 +76,11 @@ bool sphere::hit(const ray& r, double t_min, double t_max, hit_record& rec) cons
             return false;
     }
 
-    rec.t = root;
-    rec.p = r.at(rec.t);
-    vec3 outward_normal = unit_vector((rec.p - center) / radius);
-    rec.set_face_normal(r, outward_normal);
-    rec.mat_ptr = mat;
+    out_rec.t = root;
+    out_rec.p = r.at(out_rec.t);
+    vec3 outward_normal = unit_vector((out_rec.p - center) / radius);
+    out_rec.set_face_normal(r, outward_normal);
+    out_rec.mat_ptr = mat;
 
     return true;
 }

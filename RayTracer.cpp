@@ -25,6 +25,7 @@ color ray_color(const ray& r, const hittable& world, int depth) {
         // For diffuse materials the direction is random.
         // For metal materials the reflection is a mirrored one.
         // `attenuation` is a color which decreases the light from each ray, because as the distance increases light in real world get scattered and becomes less focused.
+        // depth is the number of recursive ray sending before it stops jumping around objects.
         if (hit_data.mat_ptr->scatter(r, hit_data, attenuation, scattered))
             return attenuation * ray_color(scattered, world, depth - 1);
         return color(0, 0, 0);
@@ -47,6 +48,7 @@ int main()
     const int imageWidth = 400;
     const int imageHeight = static_cast<int>(imageWidth / aspect_ratio);
     const int numberOfSamples = 100;
+    const int depth = 50;
 
     // World
 
@@ -57,7 +59,7 @@ int main()
     auto material_left = make_shared<metal>(color(0.8, 0.8, 0.8));
     auto material_right = make_shared<metal>(color(0.8, 0.6, 0.2));
 
-    world.add(make_shared<sphere>(point3(0.0, -100.5, -1.0), 100.0, material_ground));
+    world.add(make_shared<sphere>(point3(0.0, 100.5, -1.0), 100.0, material_ground));
     world.add(make_shared<sphere>(point3(0.0, 0.0, -1.0), 0.5, material_center));
     world.add(make_shared<sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_left));
     world.add(make_shared<sphere>(point3(1.0, 0.0, -1.0), 0.5, material_right));
@@ -66,7 +68,7 @@ int main()
     point3 lookat(0, 0, 0);
     vec3 vup(0, 1, 0);
     auto dist_to_focus = (lookfrom - lookat).length();
-    auto aperture = 1.0;
+    auto aperture = 2.0;
 
     camera cam(lookfrom, lookat, vup, 90, aspect_ratio, aperture, dist_to_focus);
 
@@ -105,7 +107,7 @@ int main()
                 // On the second iteration i = 1, 'u' will become > 0 and we will get a direction slightly to the right.
 
                 ray r = cam.get_ray(u, v);
-                pixelColor += ray_color(r, world, 50);
+                pixelColor += ray_color(r, world, depth);
             }
 
             write_color(std::cout, pixelColor, numberOfSamples);
