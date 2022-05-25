@@ -64,11 +64,11 @@ int main()
     world.add(make_shared<sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_left));
     world.add(make_shared<sphere>(point3(1.0, 0.0, -1.0), 0.5, material_right));
 
-    point3 lookfrom(0, 0, -2);
+    point3 lookfrom(0, 0, -1);
     point3 lookat(0, 0, 0);
     vec3 vup(0, 1, 0);
     auto dist_to_focus = (lookfrom - lookat).length();
-    auto aperture = 2.0;
+    auto aperture = 1.0;
 
     camera cam(lookfrom, lookat, vup, 90, aspect_ratio, aperture, dist_to_focus);
 

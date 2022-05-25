@@ -116,7 +116,10 @@ inline vec3 cross(const vec3& u, const vec3& v) {
 	);
 }
 
-// Mirror reflection. See README for more info on why this formula.
+/**
+* Mirror reflection.
+* To the ray that is reflected add two times the negated projection on the normal.
+*/
 inline static vec3 reflect(const vec3& v, const vec3& n) {
 	return v - 2.0 * dot(v, n) * n;
 }
