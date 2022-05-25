@@ -139,21 +139,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="RayTracer.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="PPMImage.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera.h" />
-    <ClInclude Include="dielectric.h" />
-    <ClInclude Include="hittable.h" />
-    <ClInclude Include="hittable_list.h" />
-    <ClInclude Include="lambertian.h" />
-    <ClInclude Include="material.h" />
-    <ClInclude Include="metal.h" />
-    <ClInclude Include="ppm_image.h" />
-    <ClInclude Include="ray.h" />
-    <ClInclude Include="sphere.h" />
-    <ClInclude Include="utils.h" />
-    <ClInclude Include="vec3.h" />
+    <ClInclude Include="PPMImage.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
