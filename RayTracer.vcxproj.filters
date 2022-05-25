@@ -53,7 +53,7 @@
     <ClInclude Include="dielectric.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ppm_factory.h">
+    <ClInclude Include="ppm_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
