@@ -1,3 +1,3 @@
 #include "Color.h"
 
-Color::Color(unsigned short r, unsigned short g, unsigned short b) : r(r), g(g), b(b) {}
+Color::Color(double r, double g, double b) : r(r), g(g), b(b) {}

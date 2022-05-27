@@ -2,10 +2,10 @@
 struct Color
 {
 public:
-	Color(unsigned short r, unsigned short g, unsigned short b);
+	Color(double r, double g, double b);
 
-	unsigned short r;
-	unsigned short g;
-	unsigned short b;
+	double r;
+	double g;
+	double b;
 };
 

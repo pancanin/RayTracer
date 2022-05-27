@@ -139,13 +139,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Point3.cpp" />
+    <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PPMImage.cpp" />
+    <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="Point3.h" />
+    <ClInclude Include="Ray.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="PPMImage.h" />
+    <ClInclude Include="Vector3.h" />
+    <ClInclude Include="Vector3Math.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
