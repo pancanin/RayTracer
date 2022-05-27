@@ -12,22 +12,9 @@ int main()
 
     img.writePPMHeaders(std::cout);
 
-    int heightThird = height / 3;
-    int upperPartEnd = heightThird;
-    int midPartEnd = heightThird * 2;
-    int bottomPartEnd = height;
-
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
-            if (row <= upperPartEnd) {
-                img.writeColor(std::cout, 0xff, 0xff, 0xff);
-            }
-            else if (row <= midPartEnd) {
-                img.writeColor(std::cout, 0, 0xff, 0);
-            }
-            else {
-                img.writeColor(std::cout, 0xff, 0, 0);
-            }
+            img.writeColor(std::cout, Color(row, col, 0));
         }
     }
 }

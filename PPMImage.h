@@ -3,6 +3,8 @@
 #include <string>
 #include <ostream>
 
+#include "Color.h"
+
 class PPMImage {
 public:
 	PPMImage(
@@ -13,7 +15,7 @@ public:
 	);
 
 	void writePPMHeaders(std::ostream& os);
-	void writeColor(std::ostream& os, unsigned short r, unsigned short g, unsigned short b);
+	void writeColor(std::ostream& os, const Color& color);
 private:
 	std::string colorFormat;
 	unsigned short imgWidth;

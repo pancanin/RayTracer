@@ -13,6 +13,6 @@ void PPMImage::writePPMHeaders(std::ostream& os) {
 		<< std::to_string(maxColor) << std::endl;
 }
 
-void PPMImage::writeColor(std::ostream& os, unsigned short r, unsigned short g, unsigned short b) {
-	os << r << " " << g << " " << b << std::endl;
+void PPMImage::writeColor(std::ostream& os, const Color& color) {
+	os << color.r << " " << color.g << " " << color.b << std::endl;
 }
