@@ -143,6 +143,7 @@
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Point3.cpp" />
     <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="Shaders.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PPMImage.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Point3.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="Shaders.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="PPMImage.h" />
     <ClInclude Include="Vector3.h" />

@@ -1,6 +1,7 @@
 #include "Camera.h"
 
-Camera::Camera(double aspectRatio, double viewportHeight, double focalLength) :
+Camera::Camera(Point3 lensPosition, double aspectRatio, double viewportHeight, double focalLength) :
+	lensPosition(lensPosition),
 	aspectRatio(aspectRatio),
 	focalLength(focalLength),
 	viewportHeight(viewportHeight),
@@ -8,5 +9,13 @@ Camera::Camera(double aspectRatio, double viewportHeight, double focalLength) :
 	initialRay(calculateInitialRay()) {}
 
 Ray Camera::calculateInitialRay() {
+	Vector3 upperLeftCornerPosition = Vector3(-(viewportWidth / 2.0), viewportHeight / 2.0, -focalLength);
 
+	return Ray(lensPosition, upperLeftCornerPosition);
+}
+
+Ray Camera::calculateOffsetRay(double x, double y) const {
+	Ray offsetRay(lensPosition, initialRay.getDirection() + Vector3(x, -y, 0));
+
+	return offsetRay;
 }

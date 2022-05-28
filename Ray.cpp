@@ -5,3 +5,12 @@ Ray::Ray(const Point3& origin, const Vector3& direction) : origin(origin), direc
 Point3 Ray::at(double t) const {
 	return origin + (direction * t);
 }
+
+const Vector3& Ray::getDirection() const {
+	return direction;
+}
+
+std::ostream& operator<<(std::ostream& os, const Ray& ray) {
+	return os << "Ray x direction: " << ray.getDirection().x() << "; Ray y direction: " <<
+		ray.getDirection().y() << "; Ray z direction: " << ray.getDirection().z();
+}
