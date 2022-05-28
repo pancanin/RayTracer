@@ -10,9 +10,8 @@ Color Shaders::shadeBasedOnPosition(const Ray& ray) {
 }
 
 Color Shaders::shadeBasedOnCenterDistance(const Ray& ray, const Ray& focalCenter) {
-	double crossProduct = ray.getDirection().calculateCrossProduct(focalCenter.getDirection()).calculateLength();
+	Vector3 centerToRay = ray.getDirection() + -focalCenter.getDirection();
+	double centerToRayLength = centerToRay.calculateLength();
 
-	std::cerr << crossProduct << '\n' << std::flush;
-
-	return Color(0, 0, Utils::denormalise(crossProduct / 10.0, 255));
+	return Color(centerToRayLength * 40, centerToRayLength * 10, centerToRayLength * 90);
 }

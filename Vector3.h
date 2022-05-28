@@ -10,6 +10,7 @@ public:
 
 	Vector3 operator*(double scalar) const;
 	Vector3 operator+(const Vector3& other) const;
+	Vector3 operator-() const;
 
 	double calculateDotProduct(const Vector3& other) const;
 	Vector3 calculateCrossProduct(const Vector3& other) const;

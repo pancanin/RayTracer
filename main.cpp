@@ -19,13 +19,15 @@ int main()
     Point3 lensPosition(0, 0, 0);
     Camera camera(lensPosition, aspectRatio, viewportHeight, focalLength);
     Ray initialRay = camera.calculateInitialRay();
-    Ray focalPointRay = Ray(lensPosition, Vector3(1, 1, -focalLength));
+
+    Ray focalPointRay = Ray(lensPosition, Vector3(0, 0, -focalLength));
 
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
             double offsetX = static_cast<double>(col) / width;
             double offsetY = static_cast<double>(row) / height;
             Ray currentRay = camera.calculateOffsetRay(offsetX, offsetY);
+
             Color pixelColor = Shaders::shadeBasedOnCenterDistance(currentRay, focalPointRay);
 
             img.writeColor(std::cout, pixelColor);

@@ -15,7 +15,7 @@ Ray Camera::calculateInitialRay() {
 }
 
 Ray Camera::calculateOffsetRay(double x, double y) const {
-	Ray offsetRay(lensPosition, initialRay.getDirection() + Vector3(x, -y, 0));
+	Ray offsetRay(lensPosition, initialRay.getDirection() + Vector3(x * viewportWidth, -y * viewportHeight, 0));
 
 	return offsetRay;
 }

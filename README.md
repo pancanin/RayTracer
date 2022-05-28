@@ -93,8 +93,12 @@ int main()
 
 By redirecting std::cout to a file we get an ppm image.
 
-![writing BG flag to file](https://github.com/pancanin/RayTracer/blob/from-0/helpful_materials/bg-flag.PNG?raw=true)
+![writing BG flag to file](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/bg-flag.PNG?raw=true)
 
 ### Simple positional shader based on ray
 
-![writing BG flag to file](https://github.com/pancanin/RayTracer/blob/from-0/helpful_materials/positional-shader.PNG?raw=true)
+![positional shader](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/positional-shader.PNG?raw=true)
+
+### Shader based on distance of ray from focal ray.
+
+![positional shader](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/distance-center.PNG?raw=true)
