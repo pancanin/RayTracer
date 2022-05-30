@@ -3,7 +3,7 @@
 #include <string>
 #include <ostream>
 
-#include "Color.h"
+#include "Vector3.h"
 
 class PPMImage {
 public:

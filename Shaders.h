@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Color.h"
+#include "Vector3.h"
 #include "Ray.h"
 #include "IntersectionData.h"
 

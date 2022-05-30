@@ -1,8 +1,11 @@
 #include "Sphere.h"
 
-Sphere::Sphere(Point3 center, double radius) : center(center), radius(radius) {}
+Sphere::Sphere(Point3 center, double radius, std::shared_ptr<Material> matPtr) :
+	center(center),
+	radius(radius),
+	materialPtr(matPtr) {}
 
-IntersectionData Sphere::intersectWith(const Ray& ray) {
+IntersectionData Sphere::intersectWith(const Ray& ray) const {
 	IntersectionData data{ false, Vector3(0, 0, 0), Vector3(0, 0, 0) };
 
 	// Note: we are considering the cases when center of sphere is not at origin 0,0,0 by traslating the ray with -C.
@@ -30,6 +33,10 @@ IntersectionData Sphere::intersectWith(const Ray& ray) {
 		double t0 = (-b + sqrt(det)) / 2 * a;
 		double t1 = (-b - sqrt(det)) / 2 * a;
 
+		if (t0 < 0) {
+			return data;
+		}
+
 		// calculate frontal intersection vector
 		Vector3 intersectionVector = ray.at(t0);
 		Vector3 intersectionNormal = (intersectionVector + -center).calculateNormal();
@@ -49,4 +56,14 @@ IntersectionData Sphere::intersectWith(const Ray& ray) {
 	}
 
 	return data;
+}
+
+Color Sphere::calculateColor(const Ray& ray) const {
+	IntersectionData d = this->intersectWith(ray);
+
+	if (d.hasIntersection) {
+		return materialPtr.get()->shade(d);
+	}
+	
+	return Color(255, 255, 255);
 }

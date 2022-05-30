@@ -13,5 +13,5 @@ void PPMImage::writePPMHeaders(std::ostream& os) {
 }
 
 void PPMImage::writeColor(std::ostream& os, const Color& color) {
-	os << color.r << " " << color.g << " " << color.b << std::endl;
+	os << color.x() << " " << color.y() << " " << color.z() << std::endl;
 }

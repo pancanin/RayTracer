@@ -22,3 +22,4 @@ private:
 };
 
 using Point3 = Vector3;
+using Color = Vector3;
