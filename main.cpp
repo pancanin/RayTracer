@@ -13,14 +13,12 @@ int main()
     const double viewportHeight = 2.0;
     const double focalLength = 1.0;
 
-    PPMImage img("P3", width, height, maxColor);
-
+    PPMImage img(width, height, maxColor);
     img.writePPMHeaders(std::cout);
+
     Point3 lensPosition(0, 0, 0);
     Camera camera(lensPosition, aspectRatio, viewportHeight, focalLength);
-    Ray initialRay = camera.calculateInitialRay();
-
-    Ray focalPointRay = Ray(lensPosition, Vector3(0, 0, -focalLength));
+    Ray focalPointRay = camera.getFocalRay();
 
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {

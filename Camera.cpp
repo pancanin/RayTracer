@@ -19,3 +19,7 @@ Ray Camera::calculateOffsetRay(double x, double y) const {
 
 	return offsetRay;
 }
+
+Ray Camera::getFocalRay() const {
+	return Ray(lensPosition, Vector3(0, 0, -focalLength));
+}

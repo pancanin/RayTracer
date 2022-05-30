@@ -1,11 +1,10 @@
 #include "PPMImage.h"
 
 PPMImage::PPMImage(
-	const std::string& colorFormat,
 	unsigned short imgWidth,
 	unsigned short imgHeight,
 	unsigned short maxColor
-): colorFormat(colorFormat), imgWidth(imgWidth), imgHeight(imgHeight), maxColor(maxColor) {}
+): colorFormat("P3"), imgWidth(imgWidth), imgHeight(imgHeight), maxColor(maxColor) {}
 
 void PPMImage::writePPMHeaders(std::ostream& os) {
 	os << colorFormat << std::endl

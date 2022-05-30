@@ -8,7 +8,6 @@
 class PPMImage {
 public:
 	PPMImage(
-		const std::string& colorFormat,
 		unsigned short imgWidth,
 		unsigned short imgHeight,
 		unsigned short maxColor
