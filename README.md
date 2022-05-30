@@ -16,3 +16,7 @@ RT is a program that takes 3D objects and creates a 2D image based on camera, li
 ### Tracing ray to sphere intersections. Shading based on intersection data.
 
 ![positional shader](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/tracing-sphere.PNG?raw=true)
+
+### Tracing world with 2 spheres
+
+![positional shader](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/world-preview.PNG?raw=true)

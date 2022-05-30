@@ -1,0 +1,11 @@
+#pragma once
+
+#include "Ray.h"
+#include "IntersectionData.h"
+#include "Vector3.h"
+
+class Intersectable {
+public:
+	virtual IntersectionData intersectWith(const Ray& ray) const = 0;
+	virtual Color calculateColor(const Ray& ray) const = 0;
+};
