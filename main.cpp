@@ -3,6 +3,8 @@
 #include "PPMImage.h"
 #include "Camera.h"
 #include "Shaders.h"
+#include "IntersectionData.h"
+#include "Sphere.h"
 
 int main()
 {
@@ -18,7 +20,8 @@ int main()
 
     Point3 lensPosition(0, 0, 0);
     Camera camera(lensPosition, aspectRatio, viewportHeight, focalLength);
-    Ray focalPointRay = camera.getFocalRay();
+
+    Sphere sp1(Point3(0, 0, -2), 1);
 
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
@@ -26,7 +29,9 @@ int main()
             double offsetY = static_cast<double>(row) / height;
             Ray currentRay = camera.calculateOffsetRay(offsetX, offsetY);
 
-            Color pixelColor = Shaders::shadeBasedOnCenterDistance(currentRay, focalPointRay);
+            IntersectionData intrsData = sp1.intersectWith(currentRay);
+
+            Color pixelColor = Shaders::shadeBasedOnIntersectionData(intrsData);
 
             img.writeColor(std::cout, pixelColor);
         }

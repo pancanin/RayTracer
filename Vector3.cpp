@@ -47,3 +47,7 @@ Vector3 Vector3::calculateCrossProduct(const Vector3& other) const {
 double Vector3::calculateLength() const {
 	return sqrt(x() * x() + y() * y() + z() * z());
 }
+
+Vector3 Vector3::calculateNormal() const {
+	return *this * (1.0 / this->calculateLength());
+}

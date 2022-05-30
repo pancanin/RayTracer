@@ -2,7 +2,6 @@
 
 #include <iostream>
 
-#include "Point3.h"
 #include "Vector3.h"
 
 class Ray
@@ -19,6 +18,7 @@ public:
 	Point3 at(double t) const;
 
 	const Vector3& getDirection() const;
+	const Point3& getOrigin() const;
 
 	friend std::ostream& operator<<(std::ostream& os, const Ray& ray);
 private:

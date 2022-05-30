@@ -2,6 +2,7 @@
 
 #include "Color.h"
 #include "Ray.h"
+#include "IntersectionData.h"
 
 namespace Shaders
 {
@@ -16,4 +17,6 @@ namespace Shaders
 	* To find the distance, subtract the focal center ray with the current ray and find the length of that vector.
 	*/
 	Color shadeBasedOnCenterDistance(const Ray& ray, const Ray& focalCenter);
+
+	Color shadeBasedOnIntersectionData(const IntersectionData& intrsData);
 };

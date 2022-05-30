@@ -15,3 +15,18 @@ Color Shaders::shadeBasedOnCenterDistance(const Ray& ray, const Ray& focalCenter
 
 	return Color(centerToRayLength * 40, centerToRayLength * 10, centerToRayLength * 90);
 }
+
+Color Shaders::shadeBasedOnIntersectionData(const IntersectionData& intrsData) {
+	if (intrsData.hasIntersection) {
+		double angleRelationRayNormal = intrsData.intersectionRayVector
+			.calculateNormal()
+			.calculateDotProduct(intrsData.intersectionNormal);
+
+		// to get a stronger contrast we raise the dot product of the intersection and normal to the power of 3.
+		double b = 255 * angleRelationRayNormal * angleRelationRayNormal * angleRelationRayNormal;
+
+		return Color(0, 0, b);
+	}
+
+	return Color(128, 0, 0);
+}
