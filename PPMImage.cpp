@@ -13,5 +13,5 @@ void PPMImage::writePPMHeaders(std::ostream& os) {
 }
 
 void PPMImage::writeColor(std::ostream& os, const Color& color) {
-	os << color.x() << " " << color.y() << " " << color.z() << std::endl;
+	os << static_cast<int>(color.x()) << " " << static_cast<int>(color.y()) << " " << static_cast<int>(color.z()) << std::endl;
 }

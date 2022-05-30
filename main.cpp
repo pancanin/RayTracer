@@ -7,6 +7,7 @@
 #include "Sphere.h"
 #include "GranmasButtonsMaterial.h"
 #include "World.h"
+#include "Utils.h"
 
 int main()
 {
@@ -22,6 +23,7 @@ int main()
 
     Point3 lensPosition(0, 0, 0);
     Camera camera(lensPosition, aspectRatio, viewportHeight, focalLength);
+    const int numberOfSamplesPerPixel = 100;
 
     World world;
 
@@ -35,13 +37,17 @@ int main()
 
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
-            double offsetX = static_cast<double>(col) / width;
-            double offsetY = static_cast<double>(row) / height;
-            Ray currentRay = camera.calculateOffsetRay(offsetX, offsetY);
+            Color pixelColor = Color(0, 0, 0);
 
-            Color pixelColor = world.calculateColor(currentRay);
+            for (int sampleN = 0; sampleN < numberOfSamplesPerPixel; sampleN++) {
+                double offsetX = static_cast<double>(col + Utils::random_double()) / width;
+                double offsetY = static_cast<double>(row + Utils::random_double()) / height;
+                Ray currentRay = camera.calculateOffsetRay(offsetX, offsetY);
 
-            img.writeColor(std::cout, pixelColor);
+                pixelColor = pixelColor + world.calculateColor(currentRay);
+            }
+
+            img.writeColor(std::cout, pixelColor * (1.0/numberOfSamplesPerPixel));
         }
     }
 }
