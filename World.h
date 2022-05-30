@@ -12,5 +12,7 @@ public:
 private:
 	std::shared_ptr<Intersectable> worldObjects[100];
 	int idx = 0;
+	mutable int depth = 0;
+	int maxDepth = 30;
 };
 

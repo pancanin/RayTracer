@@ -2,6 +2,8 @@
 
 #include <math.h>
 
+#include "Utils.h"
+
 Vector3::Vector3(double x, double y, double z) {
 	e[0] = x;
 	e[1] = y;
@@ -50,4 +52,8 @@ double Vector3::calculateLength() const {
 
 Vector3 Vector3::calculateNormal() const {
 	return *this * (1.0 / this->calculateLength());
+}
+
+Vector3 Vector3::randomVector(double min, double max) {
+	return Vector3(Utils::randomDouble(min, max), Utils::randomDouble(min, max), Utils::randomDouble(min, max));
 }

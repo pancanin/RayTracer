@@ -1,8 +1,13 @@
 #pragma once
+
+#include "Vector3.h"
+
 namespace Utils
 {
 	double denormalise(double value, double max);
-	double random_double();
+	double randomDouble();
+	double randomDouble(double min, double max);
 	double clamp(double x, double min, double max);
+	Vector3 randomVectorUnitCircle();
 };
 

@@ -17,6 +17,8 @@ public:
 	Vector3 calculateCrossProduct(const Vector3& other) const;
 	double calculateLength() const;
 	Vector3 calculateNormal() const;
+
+	static Vector3 randomVector(double min, double max);
 private:
 	double e[3];
 };

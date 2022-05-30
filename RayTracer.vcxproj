@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Diffuse.cpp" />
     <ClCompile Include="GranmasButtonsMaterial.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Shaders.cpp" />
@@ -152,10 +153,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Diffuse.h" />
     <ClInclude Include="GranmasButtonsMaterial.h" />
     <ClInclude Include="Intersectable.h" />
     <ClInclude Include="IntersectionData.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="MaterialType.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="Sphere.h" />

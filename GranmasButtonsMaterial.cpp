@@ -2,7 +2,7 @@
 
 #include "Utils.h"
 
-GranmasButtonsMaterial::GranmasButtonsMaterial(const Color& color) : Material(color) {}
+GranmasButtonsMaterial::GranmasButtonsMaterial(const Color& color) : Material(color, MaterialType::DEFAULT, 1) {}
 
 Color GranmasButtonsMaterial::shade(const IntersectionData& intrsData) const {
 	double angleRelationRayNormal = intrsData.intersectionRayVector

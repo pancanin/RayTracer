@@ -8,6 +8,7 @@
 #include "GranmasButtonsMaterial.h"
 #include "World.h"
 #include "Utils.h"
+#include "Diffuse.h"
 
 int main()
 {
@@ -27,8 +28,8 @@ int main()
 
     World world;
 
-    std::shared_ptr<Material> ballMaterial = std::make_shared<GranmasButtonsMaterial>(Color(235, 161, 52));
-    std::shared_ptr<Material> planetMaterial = std::make_shared<GranmasButtonsMaterial>(Color(52, 235, 165));
+    std::shared_ptr<Material> ballMaterial = std::make_shared<Diffuse>(Color(235, 161, 52));
+    std::shared_ptr<Material> planetMaterial = std::make_shared<Diffuse>(Color(52, 235, 165));
     Sphere ball(Point3(0, 0, -2), 1, ballMaterial);
     Sphere planet(Point3(0, -50.5, -1), 50, planetMaterial);
 
@@ -40,8 +41,8 @@ int main()
             Color pixelColor = Color(0, 0, 0);
 
             for (int sampleN = 0; sampleN < numberOfSamplesPerPixel; sampleN++) {
-                double offsetX = static_cast<double>(col + Utils::random_double()) / width;
-                double offsetY = static_cast<double>(row + Utils::random_double()) / height;
+                double offsetX = static_cast<double>(col + Utils::randomDouble()) / width;
+                double offsetY = static_cast<double>(row + Utils::randomDouble()) / height;
                 Ray currentRay = camera.calculateOffsetRay(offsetX, offsetY);
 
                 pixelColor = pixelColor + world.calculateColor(currentRay);

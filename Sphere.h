@@ -19,6 +19,8 @@ public:
 	IntersectionData intersectWith(const Ray& ray) const override;
 
 	Color calculateColor(const Ray& ray) const;
+
+	std::shared_ptr<Material> getMaterial() const;
 private:
 	Point3 center;
 	double radius;
