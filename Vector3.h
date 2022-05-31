@@ -19,6 +19,7 @@ public:
 	Vector3 calculateCrossProduct(const Vector3& other) const;
 	double calculateLength() const;
 	Vector3 calculateNormal() const;
+	Vector3 calculateProjection(const Vector3& other) const;
 
 	static Vector3 randomVector(double min, double max);
 

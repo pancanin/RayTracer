@@ -2,5 +2,6 @@
 
 enum class MaterialType {
 	DIFFUSE,
-	DEFAULT
+	DEFAULT,
+	METAL
 };

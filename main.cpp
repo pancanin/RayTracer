@@ -9,6 +9,7 @@
 #include "World.h"
 #include "Utils.h"
 #include "Diffuse.h"
+#include "Metal.h"
 
 int main()
 {
@@ -30,8 +31,10 @@ int main()
 
     std::shared_ptr<Material> ballMaterial = std::make_shared<Diffuse>(Color(0.5, 0.5, 0.5), 0.5);
     std::shared_ptr<Material> planetMaterial = std::make_shared<Diffuse>(Color(0.1, 0.1, 0.2), 0.5);
+    std::shared_ptr<Material> metalMaterial = std::make_shared<Metal>(Color(0.1, 0.1, 0.2), 0.5);
 
     world.add(std::make_shared<Sphere>(Point3(0, 0, -1), 0.5, ballMaterial));
+    world.add(std::make_shared<Sphere>(Point3(-1, 0, -1), 0.5, metalMaterial));
     world.add(std::make_shared<Sphere>(Point3(0, -100.5, -1), 100, planetMaterial));
 
     for (int row = 0; row < height; row++) {

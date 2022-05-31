@@ -61,3 +61,7 @@ Vector3 Vector3::randomVector(double min, double max) {
 std::ostream& operator<<(std::ostream& os, const Vector3& vec) {
 	return os << vec.x() << " " << vec.y() << " " << vec.z();
 }
+
+Vector3 Vector3::calculateProjection(const Vector3& other) const {
+	return other * this->calculateDotProduct(other) * (1.0 / (other.calculateLength() * other.calculateLength()));
+}

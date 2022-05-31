@@ -29,6 +29,9 @@ Color World::calculateColor(const Ray& ray) const {
 
 				return c;
 			}
+			else if (current.get()->getMaterial().get()->getType() == MaterialType::METAL) {
+				
+			}
 
 			return current.get()->getMaterial()->shade(intrsData);
 		}
