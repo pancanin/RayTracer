@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 class Vector3
 {
 public:
@@ -19,6 +21,8 @@ public:
 	Vector3 calculateNormal() const;
 
 	static Vector3 randomVector(double min, double max);
+
+	friend std::ostream& operator<<(std::ostream& os, const Vector3& vec);
 private:
 	double e[3];
 };

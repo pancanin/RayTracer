@@ -57,3 +57,7 @@ Vector3 Vector3::calculateNormal() const {
 Vector3 Vector3::randomVector(double min, double max) {
 	return Vector3(Utils::randomDouble(min, max), Utils::randomDouble(min, max), Utils::randomDouble(min, max));
 }
+
+std::ostream& operator<<(std::ostream& os, const Vector3& vec) {
+	return os << vec.x() << " " << vec.y() << " " << vec.z();
+}

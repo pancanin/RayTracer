@@ -6,15 +6,15 @@
 
 class Material {
 public:
-	Material(const Color& color, MaterialType type, int attenuation) : color(color), type(type), attenuation(attenuation) {}
+	Material(const Color& color, MaterialType type, double attenuation) : color(color), type(type), attenuation(attenuation) {}
 
 	virtual Color shade(const IntersectionData& intrsData) const = 0;
 	
 	MaterialType getType() const { return type; }
-	int getAttenuation() const { return attenuation; }
+	double getAttenuation() const { return attenuation; }
 protected:
 	Color color;
 	MaterialType type;
 private:
-	int attenuation;
+	double attenuation;
 };

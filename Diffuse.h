@@ -7,7 +7,7 @@
 class Diffuse : public Material
 {
 public:
-	Diffuse(const Color& color, int attenuation);
+	Diffuse(const Color& color, double attenuation);
 
 	Color shade(const IntersectionData& intrsData) const override;
 
