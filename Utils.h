@@ -8,6 +8,7 @@ namespace Utils
 	double randomDouble();
 	double randomDouble(double min, double max);
 	double clamp(double x, double min, double max);
-	Vector3 randomVectorUnitCircle();
+	Vector3 randomVectorInUnitCircle();
+	Color denormalise(const Color& color, double maxValue);
 };
 

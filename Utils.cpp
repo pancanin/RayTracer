@@ -24,7 +24,7 @@ double Utils::clamp(double x, double min, double max) {
 	return x;
 }
 
-Vector3 Utils::randomVectorUnitCircle() {
+Vector3 Utils::randomVectorInUnitCircle() {
 	while (true) {
 		Vector3 randomVec = Vector3::randomVector(-1, 1);
 		
@@ -34,4 +34,12 @@ Vector3 Utils::randomVectorUnitCircle() {
 
 		return randomVec;
 	}
+}
+
+Color Utils::denormalise(const Color& color, double maxValue) {
+	double r = maxValue * Utils::clamp(color.x(), 0, 1);
+	double g = maxValue * Utils::clamp(color.y(), 0, 1);
+	double b = maxValue * Utils::clamp(color.z(), 0, 1);
+
+	return Color(r, g, b);
 }

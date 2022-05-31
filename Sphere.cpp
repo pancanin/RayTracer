@@ -65,7 +65,7 @@ Color Sphere::calculateColor(const Ray& ray) const {
 		return materialPtr.get()->shade(d);
 	}
 	
-	return Color(255, 255, 255);
+	return Color(0, 0, 0);
 }
 
 std::shared_ptr<Material> Sphere::getMaterial() const {

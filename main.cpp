@@ -24,17 +24,15 @@ int main()
 
     Point3 lensPosition(0, 0, 0);
     Camera camera(lensPosition, aspectRatio, viewportHeight, focalLength);
-    const int numberOfSamplesPerPixel = 100;
+    const int numberOfSamplesPerPixel = 50;
 
     World world;
 
-    std::shared_ptr<Material> ballMaterial = std::make_shared<Diffuse>(Color(235, 161, 52));
-    std::shared_ptr<Material> planetMaterial = std::make_shared<Diffuse>(Color(52, 235, 165));
-    Sphere ball(Point3(0, 0, -2), 1, ballMaterial);
-    Sphere planet(Point3(0, -50.5, -1), 50, planetMaterial);
+    std::shared_ptr<Material> ballMaterial = std::make_shared<Diffuse>(Color(0.8, 0.6, 0.2), 0.5);
+    std::shared_ptr<Material> planetMaterial = std::make_shared<Diffuse>(Color(0.2, 0.8, 0.5), 0.5);
 
-    world.add(std::make_shared<Sphere>(Point3(0, -50.5, -1), 50, planetMaterial));
-    world.add(std::make_shared<Sphere>(Point3(0, 0, -2), 1, ballMaterial));
+    world.add(std::make_shared<Sphere>(Point3(0, 0, -1), 0.5, ballMaterial));
+    world.add(std::make_shared<Sphere>(Point3(0, -100.5, -1), 100, planetMaterial));
 
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
@@ -48,7 +46,7 @@ int main()
                 pixelColor = pixelColor + world.calculateColor(currentRay);
             }
 
-            img.writeColor(std::cout, pixelColor * (1.0/numberOfSamplesPerPixel));
+            img.writeColor(std::cout, Utils::denormalise(pixelColor * (1.0/numberOfSamplesPerPixel), 255));
         }
     }
 }
