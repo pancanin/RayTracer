@@ -23,7 +23,7 @@ Color World::calculateColor(const Ray& ray) const {
 				Color bounceRayColor = calculateColor(Diffuse::createRandomRay(intrsData));
 
 				//std::cerr << bounceRayColor * current.get()->getMaterial().get()->getAttenuation() << '\n';
-				Color c = 
+				Color c = current.get()->getMaterial()->shade(intrsData) +
 					(bounceRayColor *
 					current.get()->getMaterial().get()->getAttenuation());
 

@@ -24,3 +24,12 @@ RT is a program that takes 3D objects and creates a 2D image based on camera, li
 ### Antialiasing
 
 ![antialiasing](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/antialiasing.PNG?raw=true)
+
+
+### Diffuse (not great...)
+
+![diffuse](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/diffuse.PNG?raw=true)
+
+### Cool incident
+
+![diffuse](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/cool-incident.PNG?raw=true)

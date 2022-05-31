@@ -12,6 +12,5 @@ Color Diffuse::shade(const IntersectionData& intrsData) const {
 Ray Diffuse::createRandomRay(const IntersectionData& intrsData) {
 	Vector3 randomRayDirection = intrsData.intersectionNormal + intrsData.intersectionRayVector + Utils::randomVectorInUnitCircle();
 
-
 	return Ray(intrsData.intersectionRayVector, randomRayDirection);
 }

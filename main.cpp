@@ -28,8 +28,8 @@ int main()
 
     World world;
 
-    std::shared_ptr<Material> ballMaterial = std::make_shared<Diffuse>(Color(0.8, 0.6, 0.2), 0.5);
-    std::shared_ptr<Material> planetMaterial = std::make_shared<Diffuse>(Color(0.2, 0.8, 0.2), 0.5);
+    std::shared_ptr<Material> ballMaterial = std::make_shared<Diffuse>(Color(0.5, 0.5, 0.5), 0.5);
+    std::shared_ptr<Material> planetMaterial = std::make_shared<Diffuse>(Color(0.1, 0.1, 0.2), 0.5);
 
     world.add(std::make_shared<Sphere>(Point3(0, 0, -1), 0.5, ballMaterial));
     world.add(std::make_shared<Sphere>(Point3(0, -100.5, -1), 100, planetMaterial));
