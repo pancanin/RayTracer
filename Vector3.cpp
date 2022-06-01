@@ -28,6 +28,10 @@ Vector3 Vector3::operator+(const Vector3& other) const {
 	return Vector3(x() + other.x(), y() + other.y(), z() + other.z());
 }
 
+Vector3 Vector3::operator-(const Vector3& other) const {
+	return *this + -other;
+}
+
 Vector3 Vector3::operator-() const {
 	return Vector3(-x(), -y(), -z());
 }
@@ -51,7 +55,7 @@ double Vector3::calculateLength() const {
 }
 
 Vector3 Vector3::calculateNormal() const {
-	return *this * (1.0 / this->calculateLength());
+	return *this / this->calculateLength();
 }
 
 Vector3 Vector3::randomVector(double min, double max) {
@@ -63,5 +67,13 @@ std::ostream& operator<<(std::ostream& os, const Vector3& vec) {
 }
 
 Vector3 Vector3::calculateProjection(const Vector3& other) const {
-	return other * this->calculateDotProduct(other) * (1.0 / (other.calculateLength() * other.calculateLength()));
+	return other * this->calculateDotProduct(other) / (other.calculateLength() * other.calculateLength());
+}
+
+Vector3 Vector3::reflect(const Vector3& normal) const {
+	return *this - normal * this->calculateNormal().calculateDotProduct(normal) * 2;
+}
+
+Vector3 Vector3::operator/(double scalar) const {
+	return *this * (1.0 / scalar);
 }

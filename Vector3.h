@@ -12,7 +12,9 @@ public:
 	double z() const;
 
 	Vector3 operator*(double scalar) const;
+	Vector3 operator/(double scalar) const;
 	Vector3 operator+(const Vector3& other) const;
+	Vector3 operator-(const Vector3& other) const;
 	Vector3 operator-() const;
 
 	double calculateDotProduct(const Vector3& other) const;
@@ -20,6 +22,7 @@ public:
 	double calculateLength() const;
 	Vector3 calculateNormal() const;
 	Vector3 calculateProjection(const Vector3& other) const;
+	Vector3 reflect(const Vector3& normal) const;
 
 	static Vector3 randomVector(double min, double max);
 

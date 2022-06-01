@@ -51,7 +51,7 @@ int main()
                 pixelColor = pixelColor + world.calculateColor(currentRay);
             }
 
-            img.writeColor(std::cout, Utils::denormalise(pixelColor * (1.0/numberOfSamplesPerPixel), 255));
+            img.writeColor(std::cout, Utils::denormalise(pixelColor / numberOfSamplesPerPixel, 255));
         }
     }
 }

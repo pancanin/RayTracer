@@ -4,6 +4,9 @@
 #include "Ray.h"
 #include "IntersectionData.h"
 
+/**
+* Collection of shaders.
+*/
 namespace Shaders
 {
 	/*
