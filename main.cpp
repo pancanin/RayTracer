@@ -29,11 +29,13 @@ int main()
 
     World world;
 
-    std::shared_ptr<Material> ballMaterial = std::make_shared<Diffuse>(Color(0.5, 0.5, 0.5), 0.5);
+    std::shared_ptr<Material> ballMaterial = std::make_shared<Diffuse>(Color(0, 1, 0), 0.5);
     std::shared_ptr<Material> planetMaterial = std::make_shared<Diffuse>(Color(0.1, 0.1, 0.2), 0.5);
-    std::shared_ptr<Material> metalMaterial = std::make_shared<Metal>(Color(0.1, 0.1, 0.2), 0.5);
+    std::shared_ptr<Material> metalMaterial = std::make_shared<Metal>(Color(0, 0, 1), 0.5);
+    std::shared_ptr<Material> simpleMaterial = std::make_shared<GranmasButtonsMaterial>(Color(1, 0, 0));
 
-    world.add(std::make_shared<Sphere>(Point3(0, 0, -1), 0.5, ballMaterial));
+    world.add(std::make_shared<Sphere>(Point3(1, 0, -1), 0.5, ballMaterial));
+    world.add(std::make_shared<Sphere>(Point3(0, 0, -1), 0.5, simpleMaterial));
     world.add(std::make_shared<Sphere>(Point3(-1, 0, -1), 0.5, metalMaterial));
     world.add(std::make_shared<Sphere>(Point3(0, -100.5, -1), 100, planetMaterial));
 

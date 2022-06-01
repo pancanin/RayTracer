@@ -9,8 +9,8 @@ Color GranmasButtonsMaterial::shade(const IntersectionData& intrsData) const {
 		.calculateNormal()
 		.calculateDotProduct(intrsData.intersectionNormal);
 	Color colorf = color * angleRelationRayNormal * angleRelationRayNormal;
-	const double minColor = 128;
-	const double maxColor = 256;
+	const double minColor = 0.0;
+	const double maxColor = 1.0;
 
 	return Color(
 		Utils::clamp(colorf.x(), minColor, maxColor),

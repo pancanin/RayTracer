@@ -3,6 +3,8 @@
 Create a bare-minimum ray tracer for learning graphics programming.
 RT is a program that takes 3D objects and creates a 2D image based on camera, lighting, materials and more.
 
+:warning: Parking this project to brush up on linear algebra and ray tracing. :warning:
+
 ![writing BG flag to file](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/bg-flag.PNG?raw=true)
 
 ### Simple positional shader based on ray
@@ -33,3 +35,7 @@ RT is a program that takes 3D objects and creates a 2D image based on camera, li
 ### Cool incident
 
 ![diffuse](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/cool-incident.PNG?raw=true)
+
+### Metal, simple, diffuse ball
+
+![diffuse](https://github.com/pancanin/RayTracer/blob/master/helpful_materials/metal-simple-diffuse.PNG?raw=true)

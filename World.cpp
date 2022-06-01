@@ -18,7 +18,10 @@ Color World::calculateColor(const Ray& ray) const {
 		IntersectionData intrsData = current.get()->intersectWith(ray);
 
 		if (intrsData.hasIntersection) {
-			if (current.get()->getMaterial().get()->getType() == MaterialType::DIFFUSE) {
+			Material* material = current.get()->getMaterial().get();
+			MaterialType materialType = material->getType();
+
+			if (materialType == MaterialType::DIFFUSE) {
 				depth++;
 				Color bounceRayColor = calculateColor(Diffuse::createRandomRay(intrsData));
 
@@ -29,8 +32,15 @@ Color World::calculateColor(const Ray& ray) const {
 
 				return c;
 			}
-			else if (current.get()->getMaterial().get()->getType() == MaterialType::METAL) {
-				
+			else if (materialType == MaterialType::METAL) {
+				Vector3 reflectionVector = material->shade(intrsData);
+				Ray reflectionRay = Ray(intrsData.intersectionRayVector, reflectionVector);
+
+				if (reflectionVector.calculateDotProduct(intrsData.intersectionNormal) < 0) {
+					return Color(0, 0, 0);
+				}
+
+				return calculateColor(reflectionRay);
 			}
 
 			return current.get()->getMaterial()->shade(intrsData);
