@@ -1,4 +1,4 @@
-# Understandable Ray Tracer
+# As-Much-As-I-Know Ray Tracer
 
 Create a bare-minimum ray tracer for learning graphics programming.
 RT is a program that takes 3D objects and creates a 2D image based on camera, lighting, materials and more.
